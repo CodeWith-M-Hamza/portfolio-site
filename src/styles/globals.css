@@ -1,0 +1,196 @@
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Design Tokens (CSS Variables) ───────────────────────── */
+:root {
+  /* Background layers — dark navy, gets lighter as you go deeper */
+  --navy:    #060d1f;   /* page background */
+  --navy2:   #0c1a35;   /* card background */
+  --navy3:   #112244;   /* elevated elements */
+
+  /* Accent colors */
+  --accent:  #00c8ff;   /* electric blue — primary highlight */
+  --accent2: #00e5c8;   /* teal — secondary highlight */
+  --accent3: #4f8eff;   /* soft blue — links */
+
+  /* Text hierarchy */
+  --text:    #e8edf8;   /* primary text — almost white */
+  --text2:   #8fa3c8;   /* secondary text — muted */
+  --text3:   #4a6080;   /* tertiary text — very muted */
+
+  /* Borders — transparent accent tints */
+  --border:  rgba(0, 200, 255, 0.10);
+  --border2: rgba(0, 200, 255, 0.25);
+
+  /* Card surface */
+  --card:    rgba(12, 26, 53, 0.70);
+
+  /* Font families */
+  --ff-display: 'Cormorant Garamond', Georgia, serif;  /* headings — editorial */
+  --ff-body:    'DM Sans', system-ui, sans-serif;       /* body text */
+  --ff-mono:    'JetBrains Mono', monospace;            /* labels, stats */
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t:    0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:   var(--navy);
+  color:        var(--text);
+  font-family:  var(--ff-body);
+  font-size:    16px;
+  line-height:  1.7;
+  overflow-x:   hidden;
+}
+
+/* ── Text selection ───────────────────────────────────────── */
+::selection {
+  background: rgba(0, 200, 255, 0.25);
+}
+
+/* ── Custom scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--accent3); border-radius: 2px; }
+
+/* ── Reusable layout helpers ──────────────────────────────── */
+.section {
+  padding: 100px 0;
+}
+
+.container {
+  max-width: 1160px;
+  margin:    0 auto;
+  padding:   0 24px;
+}
+
+/* ── Reusable text styles ─────────────────────────────────── */
+.section-label {
+  font-family:     var(--ff-mono);
+  font-size:       11px;
+  letter-spacing:  3px;
+  text-transform:  uppercase;
+  color:           var(--accent);
+  margin-bottom:   12px;
+}
+
+.section-title {
+  font-family:  var(--ff-display);
+  font-size:    clamp(32px, 5vw, 52px);
+  font-weight:  600;
+  line-height:  1.15;
+  color:        var(--text);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  color:         var(--text2);
+  font-size:     15px;
+  max-width:     520px;
+  margin-bottom: 56px;
+}
+
+/* ── Reusable card ────────────────────────────────────────── */
+.card {
+  background:      var(--card);
+  border:          1px solid var(--border);
+  border-radius:   16px;
+  backdrop-filter: blur(12px);
+  transition:      border-color var(--t), transform var(--t);
+}
+
+.card:hover {
+  border-color: var(--border2);
+  transform:    translateY(-3px);
+}
+
+/* ── Reusable button ──────────────────────────────────────── */
+.btn {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            8px;
+  padding:        12px 24px;
+  border-radius:  8px;
+  font-family:    var(--ff-body);
+  font-size:      14px;
+  font-weight:    500;
+  cursor:         pointer;
+  transition:     all var(--t);
+  text-decoration: none;
+  border:         none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color:      var(--navy);
+}
+.btn-primary:hover {
+  background:  #00e8ff;
+  transform:   translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border:     1px solid var(--border2);
+  color:      var(--text);
+}
+.btn-outline:hover {
+  background: var(--border);
+  transform:  translateY(-2px);
+}
+
+/* ── Reusable tag/badge ───────────────────────────────────── */
+.tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       4px 10px;
+  border-radius: 20px;
+  font-size:     11px;
+  font-family:   var(--ff-mono);
+  background:    rgba(0, 200, 255, 0.08);
+  border:        1px solid rgba(0, 200, 255, 0.20);
+  color:         var(--accent);
+}
+
+/* ── Scroll reveal animation ──────────────────────────────── */
+/* Elements start invisible and slide up */
+/* JS (useScrollReveal hook) adds .visible when on screen */
+.reveal {
+  opacity:    0;
+  transform:  translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+/* ── Keyframe animations ──────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,200,255,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(0,200,255,0.4); }
+}
